@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Trybe Interview Deck — Three directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F4;
+    --paper: #FFFFFF;
+    --ink: #1A0918;
+    --ink-2: #4A2F47;
+    --muted: #8A7585;
+    --rule: rgba(26, 9, 24, 0.10);
+    --pink: #E6007E;
+    --aubergine: #2A0F28;
+    --sans: "Manrope", system-ui, sans-serif;
+    --serif: "Instrument Serif", serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 80px 56px 120px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 60px; margin-bottom: 64px; padding-bottom: 36px; border-bottom: 1px solid var(--rule); }
+  header .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; }
+  header .brand .a { width: 18px; height: 18px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); display: inline-block; }
+  header .label { font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--sans); font-weight: 800; font-size: 72px; line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 900px; }
+  h1 em { font-style: normal; color: var(--pink); }
+  .lede { font-size: 22px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 24px 0 0; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+  .chip { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 12px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-2); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 72px; }
+  .card { background: var(--paper); border: 1px solid var(--rule); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; text-decoration: none; color: inherit; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 24px 56px rgba(26,9,24,0.10); }
+  .card .thumb { aspect-ratio: 16/10; position: relative; overflow: hidden; border-bottom: 1px solid var(--rule); }
+  .card .body { padding: 32px 36px 36px; display: flex; flex-direction: column; gap: 14px; }
+  .card .body .tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; color: var(--pink); }
+  .card .body h3 { font-family: var(--sans); font-weight: 700; font-size: 28px; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+  .card .body p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+  .card .body .attrs { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 14px; border-top: 1px solid var(--rule); margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .card .body .cta { font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .card .body .cta .arr { width: 12px; height: 12px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); display: inline-block; }
+
+  /* thumbnail styles */
+  /* A — editorial */
+  .thumb.a { background: #F5EFE7; padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+  .thumb.a .tline { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #8A6B7A; }
+  .thumb.a .tline .brand { color: #2A1228; display: flex; gap: 6px; align-items: center; font-weight: 700; }
+  .thumb.a .tline .brand .a { width: 7px; height: 7px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+  .thumb.a h4 { font-family: var(--serif); font-weight: 400; font-size: 56px; line-height: 0.95; margin: 0; color: #2A1228; }
+  .thumb.a h4 em { font-style: italic; color: var(--pink); }
+  .thumb.a .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #8A6B7A; display: flex; gap: 22px; }
+  .thumb.a .a-large { display: inline-block; width: 0.6em; height: 0.6em; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); transform: translateY(0.06em); margin-right: 0.05em; }
+
+  /* B — brand forward */
+  .thumb.b { background: var(--aubergine); padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .thumb.b .giant { position: absolute; right: -40px; bottom: -50px; width: 220px; height: 220px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+  .thumb.b .tline { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,239,231,0.5); position: relative; z-index: 2; }
+  .thumb.b .tline .brand { color: #F5EFE7; display: flex; gap: 6px; align-items: center; font-weight: 700; font-family: "Bricolage Grotesque", var(--sans); }
+  .thumb.b .tline .brand .a { width: 7px; height: 7px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+  .thumb.b h4 { font-family: "Bricolage Grotesque", var(--sans); font-weight: 800; font-size: 56px; line-height: 0.95; margin: 0; color: #F5EFE7; letter-spacing: -0.03em; position: relative; z-index: 2; }
+  .thumb.b h4 em { font-style: normal; color: var(--pink); }
+  .thumb.b .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #FFB3D8; display: flex; gap: 22px; position: relative; z-index: 2; }
+
+  /* C v2 — Apple Futuristic */
+  .thumb.cv2 { background: #06030B; padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .thumb.cv2::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 8% 0%, rgba(255,30,142,0.32), transparent 60%), radial-gradient(70% 60% at 100% 100%, rgba(122,45,219,0.28), transparent 65%); pointer-events: none; }
+  .thumb.cv2 .tline { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(244,239,246,0.5); position: relative; z-index: 2; }
+  .thumb.cv2 .tline .brand { color: #F4EFF6; display: flex; gap: 6px; align-items: center; font-weight: 500; }
+  .thumb.cv2 .tline .brand .a { width: 7px; height: 7px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); box-shadow: 0 0 6px var(--pink); }
+  .thumb.cv2 h4 { font-family: var(--sans); font-weight: 500; font-size: 48px; line-height: 0.98; margin: 0; color: #F4EFF6; letter-spacing: -0.035em; position: relative; z-index: 2; }
+  .thumb.cv2 h4 em { font-style: normal; background: linear-gradient(180deg,#FF8EC6,#FF1E8E); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .thumb.cv2 .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(244,239,246,0.5); position: relative; z-index: 2; }
+
+  /* C — frameworks */
+  .thumb.c { background: var(--paper); padding: 0; display: flex; }
+  .thumb.c .left { flex: 1.3; padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+  .thumb.c .left .tline { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .thumb.c .left .tline .brand { color: var(--ink); display: flex; gap: 6px; align-items: center; font-weight: 700; }
+  .thumb.c .left .tline .brand .a { width: 7px; height: 7px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+  .thumb.c .left h4 { font-family: var(--sans); font-weight: 800; font-size: 48px; line-height: 0.98; margin: 0; color: var(--ink); letter-spacing: -0.025em; }
+  .thumb.c .left h4 em { font-style: normal; color: var(--pink); }
+  .thumb.c .left .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .thumb.c .right { flex: 1; background: var(--ink); padding: 22px 22px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+  .thumb.c .right .lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; color: #FFD9EC; }
+  .thumb.c .right .it { font-family: var(--mono); font-size: 9px; color: rgba(245,239,231,0.78); display: flex; gap: 6px; padding: 4px 0; border-top: 1px solid rgba(245,239,231,0.16); }
+  .thumb.c .right .it:first-of-type { border-top: 0; }
+  .thumb.c .right .it .n { color: #FFB3D8; }
+  .thumb.c .right .arr-c { position: absolute; right: -10px; bottom: -10px; width: 60px; height: 60px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); opacity: 0.9; }
+
+  .below { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 80px; padding-top: 56px; border-top: 1px solid var(--rule); }
+  .below .col h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 20px; }
+  .below .col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .below .col li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; font-size: 17px; line-height: 1.55; color: var(--ink-2); align-items: baseline; }
+  .below .col li .n { font-family: var(--mono); font-size: 12px; color: var(--pink); }
+  .below .col li strong { color: var(--ink); font-weight: 700; }
+
+  footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="brand"><span class="a"></span>TRYBE × CANDIDATE</div>
+        <div class="label" style="margin-top:20px;">Head of People · Case study presentation</div>
+      </div>
+      <div class="label">Three visual directions to compare</div>
+    </header>
+
+    <div>
+      <h1>Pick a direction. Then I'll <em>tighten it.</em></h1>
+      <p class="lede">Same 12-slide story across all three: <strong>Hi → Kyra performance rebuild → frameworks (Impact Factor, TDX, AMO, Enrichment vs Enlargement) → AI stack → outcomes → what it means for Trybe → 90-day plan.</strong> What changes is the visual language. Open any deck full-screen with the keyboard arrows.</p>
+      <div class="meta">
+        <span class="chip">30 minutes</span>
+        <span class="chip">12 slides</span>
+        <span class="chip">Speaker cues per slide</span>
+        <span class="chip">1920 × 1080</span>
+        <span class="chip">Press F for fullscreen, ← / → to navigate</span>
+      </div>
+    </div>
+
+    <div class="grid" style="grid-template-columns: repeat(4, 1fr);">
+      <a class="card" href="Direction C v2 - Apple Futuristic.html" style="outline:2px solid var(--pink); outline-offset:-2px;">
+        <div class="thumb cv2">
+          <div class="tline"><span class="brand"><span class="a"></span>TRYBE</span><span>Case study</span></div>
+          <h4>The people<br>system <em>as<br>product.</em></h4>
+          <div class="meta">[Your name] · May 2026</div>
+        </div>
+        <div class="body">
+          <span class="tag">Direction C · v2 · NEW</span>
+          <h3>Apple / Futuristic</h3>
+          <p>Direction C reimagined through a Jony Ive lens — dark, subtle aurora gradient, glass cards, Geist type, glowing power-curve and TDX gauge.</p>
+          <div class="attrs">
+            <span>Near-black</span><span>·</span><span>Geist</span><span>·</span><span>Aurora gradient</span>
+          </div>
+          <div class="cta">Open deck<span class="arr"></span></div>
+        </div>
+      </a>
+      <a class="card" href="Direction A - Editorial.html">
+        <div class="thumb a">
+          <div class="tline"><span class="brand"><span class="a"></span>TRYBE × CANDIDATE</span><span>Case study · 30 min</span></div>
+          <h4><span class="a-large"></span>Building<br>the people<br>system <em>for<br>what's next.</em></h4>
+          <div class="meta"><span>Presenter · [Your name]</span><span>May 2026</span></div>
+        </div>
+        <div class="body">
+          <span class="tag">Direction A</span>
+          <h3>Editorial / Hospitality</h3>
+          <p>Warm cream background, Instrument Serif display, magazine-like calm. Reads as a considered brand book — fits Trybe's hospitality customer base.</p>
+          <div class="attrs">
+            <span>Cream #F5EFE7</span><span>·</span><span>Serif + Manrope</span><span>·</span><span>Low contrast</span>
+          </div>
+          <div class="cta">Open deck<span class="arr"></span></div>
+        </div>
+      </a>
+
+      <a class="card" href="Direction B - Brand Forward.html">
+        <div class="thumb b">
+          <div class="giant"></div>
+          <div class="tline"><span class="brand"><span class="a"></span>TRYBE</span><span>Case study</span></div>
+          <h4>Build the<br>system.<br>Then <em>ship it.</em></h4>
+          <div class="meta"><span>[Your name]</span><span>Head of People</span></div>
+        </div>
+        <div class="body">
+          <span class="tag">Direction B</span>
+          <h3>Brand-Forward</h3>
+          <p>Deep aubergine + magenta, Bricolage Grotesque display, the Trybe arrow as a recurring motif. Confident SaaS-style — owns the brand fully.</p>
+          <div class="attrs">
+            <span>Aubergine #2A0F28</span><span>·</span><span>Bricolage + Manrope</span><span>·</span><span>High contrast</span>
+          </div>
+          <div class="cta">Open deck<span class="arr"></span></div>
+        </div>
+      </a>
+
+      <a class="card" href="Direction C - Frameworks.html">
+        <div class="thumb c">
+          <div class="left">
+            <div class="tline"><span class="brand"><span class="a"></span>TRYBE × CANDIDATE</span><span>Case study</span></div>
+            <h4>The people<br>system <em>as<br>product.</em></h4>
+            <div class="meta">[Your name] · May 2026</div>
+          </div>
+          <div class="right">
+            <div class="arr-c"></div>
+            <div class="lbl">The toolkit</div>
+            <div class="it"><span class="n">01</span><span>Impact Factor</span></div>
+            <div class="it"><span class="n">02</span><span>TDX</span></div>
+            <div class="it"><span class="n">03</span><span>AMO</span></div>
+            <div class="it"><span class="n">04</span><span>Enrich · Enlarge</span></div>
+          </div>
+        </div>
+        <div class="body">
+          <span class="tag">Direction C</span>
+          <h3>Frameworks-First</h3>
+          <p>Light, structured, your four frameworks as the visual heroes. Power-curve chart, TDX gauge, AMO triangle drawn out. Most analytical of the three.</p>
+          <div class="attrs">
+            <span>Bone #FAF7F4</span><span>·</span><span>Manrope</span><span>·</span><span>Diagrams</span>
+          </div>
+          <div class="cta">Open deck<span class="arr"></span></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="below">
+      <div class="col">
+        <h2>The 12-slide story (same in all three)</h2>
+        <ul>
+          <li><span class="n">01</span><span>Title — <strong>Building the people system for what's next</strong></span></li>
+          <li><span class="n">02</span><span>Hi, I'm [Your name] — lineage from Kyra back through Lionbridge</span></li>
+          <li><span class="n">03</span><span>The case study — <strong>Rebuilding Kyra's performance system</strong></span></li>
+          <li><span class="n">04</span><span>The contradiction — <strong>95% meet expectations vs &lt;60% OKR attainment</strong></span></li>
+          <li><span class="n">05</span><span>Diagnosis — Anchor, Cadence, Distribution</span></li>
+          <li><span class="n">06</span><span>The rebuild — <strong>Impact Factor v2.0</strong> + power curve</span></li>
+          <li><span class="n">07</span><span>Frameworks — <strong>Impact Factor · TDX · AMO · Enrichment vs Enlargement</strong></span></li>
+          <li><span class="n">08</span><span>AI as force multiplier — the six tools you shipped</span></li>
+          <li><span class="n">09</span><span>Outcomes — what changed when the system told the truth</span></li>
+          <li><span class="n">10</span><span>What this means for Trybe — Series A, 300+ properties</span></li>
+          <li><span class="n">11</span><span>First 90 days — Listen · Map · Ship</span></li>
+          <li><span class="n">12</span><span>Thank you / Q&amp;A</span></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h2>Notes &amp; next steps</h2>
+        <ul>
+          <li><span class="n">→</span><span><strong>Placeholders to swap:</strong> [Your name], [email], [phone] appear on slides 1, 2 and 12 — say the word and I'll bake them in.</span></li>
+          <li><span class="n">→</span><span><strong>The portrait on slide 2 (Direction B)</strong> is a placeholder slot — drop a headshot or I can leave it as a striped frame.</span></li>
+          <li><span class="n">→</span><span><strong>Outcome numbers</strong> (3×, +22, −41%, 48→62 TDX) are reasonable defaults from your brief — tell me your actual figures and I'll swap them in.</span></li>
+          <li><span class="n">→</span><span><strong>Speaker cues</strong> are short prompts, not a full script. Want me to expand them into a verbatim script?</span></li>
+          <li><span class="n">→</span><span><strong>Export</strong> — once you pick a direction I can ship a PowerPoint version (editable text or screenshots) or a print-ready PDF.</span></li>
+          <li><span class="n">→</span><span><strong>Mix &amp; match</strong> — happy to take the cover from one direction and the framework diagrams from another. Tell me what's working.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <span>TRYBE × HEAD OF PEOPLE · May 2026</span>
+      <span>Three directions · 12 slides · 30 min</span>
+    </footer>
+  </div>
+</body>
+</html>

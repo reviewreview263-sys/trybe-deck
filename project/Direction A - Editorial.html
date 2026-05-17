@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Trybe Interview — Direction A (Editorial)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/json" id="speaker-notes">
+[
+  "Open warm. Thank them for the time. Set up that today is the Kyra performance system rebuild — the spine project — and at the end I'll show what it would mean for Trybe.",
+  "Quick about me. Recent CPO/Head of People at Kyra. Through-line: I build the system, then I automate it. AI-native by practice, not by label.",
+  "Set the case study scene. Series A AI company, 60 people, 25M ARR. Inherited a performance system that looked healthy on paper.",
+  "Here's the contradiction. 95% of people meeting expectations, but OKR attainment below 60%. The ratings system was untethered from commercial reality.",
+  "Diagnosis. The system rewarded JD adherence, not impact. No calibration, no commercial signal, no real distribution. Twice a year, then forgotten.",
+  "The rebuild. Impact Factor v2.0. Role-specific commercial metrics. Power curve, not bell curve — most people cluster mid, outliers earn outsized reward.",
+  "The frameworks that hold it together. Impact Factors, Talent Density Index, AMO engagement signals, and enrichment vs enlargement for growth conversations.",
+  "AI as a force multiplier — not the product. PDL sourcing agent, transcript scorer with evidence-based rubrics, 1:1 insight extractor, salary benchmarking, JD architect, n8n pipelines.",
+  "Outcomes. Calibration sessions actually surfaced top performers. Comp landed on signal, not tenure. Distribution showed the truth.",
+  "What this means for Trybe. Series A, 300+ properties, multi-site operators. You don't need a heavier people function — you need a sharper one.",
+  "First 90 days. Listen, map, then ship. Anchor on TDX and a single calibration moment by day 90.",
+  "Thank you. Hand it over for questions."
+]
+</script>
+<style>
+  :root {
+    --bg: #F5EFE7;
+    --bg-2: #EDE4D8;
+    --ink: #2A1228;
+    --ink-2: #5A3D55;
+    --muted: #8A6B7A;
+    --pink: #E6007E;
+    --pink-soft: #FBD8E9;
+    --rule: rgba(42, 18, 40, 0.16);
+    --serif: "Instrument Serif", "Times New Roman", serif;
+    --sans: "Manrope", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  html, body { margin: 0; padding: 0; background: #1a0d18; }
+  deck-stage { --slide-width: 1920px; --slide-height: 1080px; }
+  deck-stage section {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 22px;
+    line-height: 1.45;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* shared chrome */
+  .chrome { position: absolute; left: 80px; right: 80px; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .chrome.top { top: 56px; }
+  .chrome.bot { bottom: 56px; }
+  .chrome .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); display: inline-block; margin-right: 10px; vertical-align: middle; }
+  .label { font-family: var(--mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pink); }
+  .label.ink { color: var(--ink-2); }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; margin: 0; }
+  h1 { font-size: 184px; line-height: 0.92; }
+  h2 { font-size: 116px; line-height: 0.95; }
+  h3 { font-size: 64px; line-height: 1.02; }
+
+  .italic { font-style: italic; }
+  .pink { color: var(--pink); }
+  .ink-2 { color: var(--ink-2); }
+
+  .pad { padding: 130px 120px; }
+  .rule { height: 1px; background: var(--rule); width: 100%; }
+
+  .arrow { display: inline-block; width: 0.7em; height: 0.7em; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); transform: translateY(0.05em); }
+
+  /* slide 1 */
+  .s1 { display: flex; flex-direction: column; justify-content: space-between; padding: 120px 120px; }
+  .s1 .top-row { display: flex; align-items: flex-start; justify-content: space-between; }
+  .s1 .brand-mark { display: flex; align-items: center; gap: 18px; font-family: var(--sans); font-weight: 700; letter-spacing: 0.06em; font-size: 22px; color: var(--ink); }
+  .s1 .brand-mark .a { width: 22px; height: 22px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+  .s1 h1 .a-large { display: inline-block; width: 0.7em; height: 0.7em; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); transform: translateY(0.06em); margin-right: 0.05em; }
+  .s1 .meta { display: grid; grid-template-columns: 220px 1fr; column-gap: 40px; row-gap: 18px; max-width: 980px; align-items: baseline; }
+  .s1 .meta dt { font-family: var(--mono); font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .s1 .meta dd { margin: 0; font-size: 22px; color: var(--ink); }
+
+  /* slide 2 */
+  .s2 { display: grid; grid-template-columns: 1.05fr 0.95fr; }
+  .s2 .left { padding: 160px 80px 160px 120px; display: flex; flex-direction: column; justify-content: space-between; }
+  .s2 .right { background: var(--bg-2); padding: 160px 120px 160px 100px; display: flex; flex-direction: column; gap: 36px; }
+  .s2 .right p { margin: 0; font-size: 28px; line-height: 1.55; color: var(--ink-2); }
+  .s2 .right p strong { color: var(--ink); font-weight: 600; }
+  .stamps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .stamp { font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 14px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-2); }
+
+  /* slide 3 (chapter) */
+  .chapter { display: flex; flex-direction: column; justify-content: center; padding: 0 200px; }
+  .chapter .kicker { font-family: var(--mono); font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pink); margin-bottom: 48px; }
+  .chapter h2 { max-width: 1500px; }
+  .chapter .footnote { margin-top: 64px; max-width: 880px; font-size: 24px; color: var(--ink-2); line-height: 1.5; }
+
+  /* slide 4 - the contradiction */
+  .s4 { padding: 130px 120px; display: flex; flex-direction: column; gap: 60px; }
+  .s4 .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; }
+  .s4 .num-block { border-top: 1px solid var(--rule); padding-top: 36px; }
+  .s4 .num { font-family: var(--serif); font-size: 320px; line-height: 0.9; letter-spacing: -0.03em; }
+  .s4 .num.dim { color: var(--ink); }
+  .s4 .num.pop { color: var(--pink); }
+  .s4 .num-label { font-family: var(--mono); font-size: 16px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 16px; max-width: 520px; }
+  .s4 .conclusion { font-family: var(--serif); font-style: italic; font-size: 56px; line-height: 1.1; color: var(--ink-2); max-width: 1500px; }
+
+  /* slide 5 - diagnosis (list) */
+  .s5 { padding: 120px 120px; display: grid; grid-template-rows: auto 1fr; gap: 70px; }
+  .s5 .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 80px; }
+  .s5 .head h3 { max-width: 1100px; }
+  .s5 .head .tag { font-family: var(--mono); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); }
+  .s5 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--rule); }
+  .s5 .col { padding: 48px 36px 0 0; border-right: 1px solid var(--rule); }
+  .s5 .col:last-child { border-right: none; padding-right: 0; padding-left: 36px; }
+  .s5 .col:first-child { padding-left: 0; }
+  .s5 .col:nth-child(2) { padding-left: 36px; }
+  .s5 .col .n { font-family: var(--mono); font-size: 14px; letter-spacing: 0.2em; color: var(--muted); }
+  .s5 .col h4 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.05; margin: 18px 0 18px; }
+  .s5 .col p { font-size: 22px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+
+  /* slide 6 - the rebuild (definition) */
+  .s6 { padding: 120px 120px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: stretch; }
+  .s6 .left { display: flex; flex-direction: column; justify-content: space-between; }
+  .s6 .left h3 { font-size: 84px; }
+  .s6 .quote { font-family: var(--serif); font-style: italic; font-size: 40px; line-height: 1.2; color: var(--ink-2); border-left: 2px solid var(--pink); padding-left: 32px; max-width: 720px; }
+  .s6 .right { background: var(--ink); color: var(--bg); padding: 70px; display: flex; flex-direction: column; gap: 28px; }
+  .s6 .right .label { color: var(--pink-soft); }
+  .s6 .right h4 { font-family: var(--serif); font-weight: 400; font-size: 56px; line-height: 1.1; margin: 0; }
+  .s6 .right ul { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-direction: column; gap: 18px; }
+  .s6 .right li { display: flex; gap: 18px; font-size: 22px; line-height: 1.5; color: rgba(245,239,231,0.85); }
+  .s6 .right li::before { content: ""; width: 14px; height: 14px; flex-shrink: 0; margin-top: 10px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+
+  /* slide 7 - frameworks */
+  .s7 { padding: 120px 120px; display: flex; flex-direction: column; gap: 60px; }
+  .s7 .row1 { display: flex; align-items: flex-end; justify-content: space-between; gap: 80px; }
+  .s7 .row1 h3 { max-width: 1000px; }
+  .s7 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .s7 .card { background: var(--bg-2); border-radius: 4px; padding: 44px 44px 40px; min-height: 240px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+  .s7 .card .badge { font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pink); }
+  .s7 .card h4 { font-family: var(--serif); font-weight: 400; font-size: 48px; line-height: 1.05; margin: 0; }
+  .s7 .card p { margin: 0; font-size: 21px; line-height: 1.5; color: var(--ink-2); }
+  .s7 .card .arrow-mark { position: absolute; right: 40px; top: 40px; width: 22px; height: 22px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--ink); opacity: 0.18; }
+
+  /* slide 8 - AI tooling */
+  .s8 { padding: 120px 120px; display: grid; grid-template-rows: auto 1fr; gap: 64px; }
+  .s8 .head { display: flex; align-items: flex-end; justify-content: space-between; }
+  .s8 .head h3 { max-width: 1000px; }
+  .s8 table { width: 100%; border-collapse: collapse; }
+  .s8 th, .s8 td { text-align: left; padding: 22px 24px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .s8 th { font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding-top: 0; border-top: 1px solid var(--rule); }
+  .s8 td.t { font-family: var(--serif); font-size: 32px; line-height: 1.05; color: var(--ink); width: 32%; }
+  .s8 td.d { font-size: 20px; color: var(--ink-2); width: 44%; }
+  .s8 td.s { font-family: var(--mono); font-size: 14px; letter-spacing: 0.04em; color: var(--ink-2); width: 24%; }
+  .s8 tr:first-child td { padding-top: 28px; }
+
+  /* slide 9 - outcomes */
+  .s9 { padding: 120px 120px; display: flex; flex-direction: column; gap: 56px; }
+  .s9 .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .s9 .head h3 { max-width: 1100px; }
+  .s9 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .s9 .tile { padding: 44px 36px; background: var(--bg-2); display: flex; flex-direction: column; gap: 18px; min-height: 280px; }
+  .s9 .tile .big { font-family: var(--serif); font-size: 120px; line-height: 0.92; letter-spacing: -0.02em; color: var(--pink); }
+  .s9 .tile .lbl { font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .s9 .tile p { margin: 0; font-size: 20px; line-height: 1.5; color: var(--ink-2); }
+
+  /* slide 10 - for Trybe */
+  .s10 { padding: 120px 120px; display: flex; flex-direction: column; gap: 60px; }
+  .s10 .head h3 { max-width: 1500px; }
+  .s10 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .s10 .col { padding: 40px 36px 0; border-left: 1px solid var(--rule); }
+  .s10 .col:first-child { padding-left: 0; border-left: none; }
+  .s10 .col .kicker { font-family: var(--mono); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); }
+  .s10 .col h4 { font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1.08; margin: 18px 0 18px; }
+  .s10 .col p { margin: 0 0 18px; font-size: 20px; line-height: 1.55; color: var(--ink-2); }
+  .s10 .col p strong { color: var(--ink); font-weight: 600; }
+
+  /* slide 11 - 90 days */
+  .s11 { padding: 120px 120px; display: flex; flex-direction: column; gap: 60px; }
+  .s11 .head h3 { max-width: 1100px; }
+  .s11 .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+  .s11 .timeline::before { content: ""; position: absolute; top: 60px; left: 0; right: 0; height: 1px; background: var(--rule); }
+  .s11 .phase { padding: 0 36px 0 0; position: relative; }
+  .s11 .phase:nth-child(2) { padding-left: 36px; padding-right: 36px; }
+  .s11 .phase:nth-child(3) { padding-left: 36px; padding-right: 0; }
+  .s11 .phase .dot { width: 18px; height: 18px; background: var(--pink); border-radius: 50%; position: absolute; top: 52px; left: 0; }
+  .s11 .phase:nth-child(2) .dot { left: 36px; }
+  .s11 .phase:nth-child(3) .dot { left: 36px; }
+  .s11 .phase .when { font-family: var(--mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); padding-top: 90px; }
+  .s11 .phase h4 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.05; margin: 18px 0 24px; }
+  .s11 .phase ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .s11 .phase li { font-size: 20px; line-height: 1.5; color: var(--ink-2); padding-left: 22px; position: relative; }
+  .s11 .phase li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); }
+
+  /* slide 12 - thank you */
+  .s12 { display: flex; flex-direction: column; justify-content: space-between; padding: 120px 120px; }
+  .s12 .big { font-family: var(--serif); font-size: 320px; line-height: 0.92; letter-spacing: -0.02em; }
+  .s12 .big .a-large { display: inline-block; width: 0.7em; height: 0.7em; clip-path: polygon(100% 8%, 100% 80%, 22% 100%); background: var(--pink); transform: translateY(0.05em); margin-right: 0.05em; }
+  .s12 .foot { display: flex; justify-content: space-between; align-items: flex-end; }
+  .s12 .foot .q { font-family: var(--serif); font-style: italic; font-size: 44px; color: var(--ink-2); max-width: 900px; line-height: 1.15; }
+  .s12 .foot .meta { font-family: var(--mono); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-align: right; }
+
+</style>
+</head>
+<body>
+<script src="deck-stage.js"></script>
+<deck-stage>
+
+  <!-- 1. Title -->
+  <section data-screen-label="01 Title">
+    <div class="s1" style="height:100%; box-sizing:border-box;">
+      <div class="top-row">
+        <div class="brand-mark"><span class="a"></span>TRYBE × CANDIDATE</div>
+        <div class="label">Case study presentation · 30 min</div>
+      </div>
+      <div>
+        <div class="label ink" style="margin-bottom:32px;">A note for the Head of People conversation</div>
+        <h1>Building<br>the people<br>system <span class="italic pink">for what's next.</span></h1>
+      </div>
+      <dl class="meta">
+        <dt>Presenter</dt><dd>[Your name] · Head of People candidate</dd>
+        <dt>For</dt><dd>Trybe — Series A, Five Elms Capital, London</dd>
+        <dt>Case study</dt><dd>Rebuilding Kyra's performance system, end-to-end</dd>
+        <dt>Date</dt><dd>May 2026</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 2. Hi I'm -->
+  <section data-screen-label="02 Hi">
+    <div class="s2" style="height:100%; box-sizing:border-box;">
+      <div class="left">
+        <div class="label">Hello</div>
+        <div>
+          <h1 style="font-size:148px;">Hi —<br>I'm <span class="italic pink">your<br>operator.</span></h1>
+        </div>
+        <div class="stamps">
+          <span class="stamp">Kyra · CPO/Head of People</span>
+          <span class="stamp">Lionbridge · PE-backed integration</span>
+          <span class="stamp">VoxSmart · global expansion</span>
+          <span class="stamp">EConsult · BambooHR rebuild</span>
+          <span class="stamp">M&amp;C Saatchi · JLL · MindGym</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="label" style="color:var(--pink);">The through-line</div>
+        <p><strong>I build the system, then I automate it.</strong> Full lifecycle: hiring, performance, comp, engagement, ops. Most recently at <strong>Kyra</strong> — Series A, ~60 people, ~$25M ARR, London.</p>
+        <p>AI-native by practice, not by label. I write the prompts, the rubrics and the Node services that wrap them.</p>
+        <p>Earlier life: large-scale post-acquisition integration at Lionbridge, multi-entity payroll &amp; global expansion at VoxSmart, plus contract work across M&amp;C Saatchi, JLL, MindGym, YM&amp;U and Ocorian.</p>
+        <p class="italic" style="font-family:var(--serif); font-size:32px; color:var(--ink);">A people function should feel like product. Shipped, measured, iterated.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Chapter / Case study -->
+  <section data-screen-label="03 Case study">
+    <div class="chapter" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>Case study · 01</span><span>Trybe · Head of People</span></div>
+      <div class="kicker">The case study</div>
+      <h2>Rebuilding Kyra's <span class="italic">performance system</span> from a politeness machine into a <span class="pink italic">signal engine.</span></h2>
+      <p class="footnote">Series A, ~60 people, ~$25M ARR. Inherited a JD-based biannual review. Looked healthy on paper. Wasn't.</p>
+      <div class="chrome bot"><span>03 / 12</span><span>Case study</span></div>
+    </div>
+  </section>
+
+  <!-- 4. The problem -->
+  <section data-screen-label="04 Problem">
+    <div class="s4" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>The contradiction</span><span>Diagnosis</span></div>
+      <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+        <h3 style="max-width:1100px;">Two numbers on the same dashboard, telling two opposite stories.</h3>
+        <div class="label">04 / 12</div>
+      </div>
+      <div class="nums">
+        <div class="num-block">
+          <div class="num dim">95%</div>
+          <div class="num-label">of people rated "meeting expectations" or above in the legacy biannual review</div>
+        </div>
+        <div class="num-block">
+          <div class="num pop">&lt;60%</div>
+          <div class="num-label">company-wide OKR attainment over the same period</div>
+        </div>
+      </div>
+      <div class="conclusion">If everyone's meeting expectations, <span class="pink">expectations aren't the right thing to measure.</span></div>
+    </div>
+  </section>
+
+  <!-- 5. Diagnosis -->
+  <section data-screen-label="05 Diagnosis">
+    <div class="s5" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>Diagnosis</span><span>Three faults in the legacy system</span></div>
+      <div class="head">
+        <h3>The review wasn't broken in execution.<br>It was broken in <span class="italic pink">design.</span></h3>
+        <div class="tag">05 / 12</div>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <div class="n">01 · Anchor</div>
+          <h4>Anchored to the JD, not to impact.</h4>
+          <p>Performance was scored against role descriptions written at hire. People rated themselves "doing the job" — which they were. Commercial outcomes never entered the conversation.</p>
+        </div>
+        <div class="col">
+          <div class="n">02 · Cadence</div>
+          <h4>Twice a year. Then forgotten.</h4>
+          <p>Six-month gaps between signal and consequence. Managers couldn't remember February by August. Ratings drifted toward the mean by default.</p>
+        </div>
+        <div class="col">
+          <div class="n">03 · Distribution</div>
+          <h4>No calibration. No real curve.</h4>
+          <p>Every manager rated their own. Without cross-team calibration, ratings inflated and comp drifted off signal. Talent density was invisible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. The rebuild -->
+  <section data-screen-label="06 Rebuild">
+    <div class="s6" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>The rebuild</span><span>Impact Factor v2.0</span></div>
+      <div class="left">
+        <div>
+          <div class="label">The rebuild · Impact Factor v2.0</div>
+          <h3 style="margin-top:24px;">From a politeness machine to a <span class="italic pink">signal engine.</span></h3>
+        </div>
+        <div class="quote">"Score the outcome, not the activity. Then calibrate it together, in the open, on a power curve — and let comp follow signal."</div>
+      </div>
+      <div class="right">
+        <div class="label">What changed</div>
+        <h4>Impact Factor v2.0</h4>
+        <ul>
+          <li>Role-specific <strong style="color:#fff;">commercial metrics</strong> replaced JD-adherence as the scoring anchor.</li>
+          <li>Distribution moved to a <strong style="color:#fff;">power curve</strong> — most people cluster mid; outliers earn outsized recognition.</li>
+          <li>Quarterly calibration with cross-team managers, recorded with structured evidence.</li>
+          <li>Comp recommendations generated from rating × Impact Factor × tenure-adjusted band.</li>
+          <li>Growth conversations split into <strong style="color:#fff;">enrichment vs enlargement</strong> tracks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Frameworks -->
+  <section data-screen-label="07 Frameworks">
+    <div class="s7" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>The toolkit</span><span>Four frameworks I carry across roles</span></div>
+      <div class="row1">
+        <h3>The four frameworks that hold <span class="italic pink">the whole system</span> together.</h3>
+        <div class="label">07 / 12</div>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="badge">01 · Impact Factor</div>
+          <div class="arrow-mark"></div>
+          <h4>Score impact, not activity.</h4>
+          <p>Role-specific commercial metrics replace JD-adherence as the anchor of performance.</p>
+        </div>
+        <div class="card">
+          <div class="badge">02 · TDX — Talent Density Index</div>
+          <div class="arrow-mark"></div>
+          <h4>Density over headcount.</h4>
+          <p>A single rolling number for what % of the org is genuinely top-tier in role. Drives hiring bar, comp envelope and exit decisions.</p>
+        </div>
+        <div class="card">
+          <div class="badge">03 · AMO — Ability, Motivation, Opportunity</div>
+          <div class="arrow-mark"></div>
+          <h4>Engagement signal that points somewhere.</h4>
+          <p>Survey engagement against the three levers managers can actually move — not vibes, not NPS.</p>
+        </div>
+        <div class="card">
+          <div class="badge">04 · Enrichment vs Enlargement</div>
+          <div class="arrow-mark"></div>
+          <h4>Two different growth conversations.</h4>
+          <p>Enrichment deepens craft in role. Enlargement adds scope. Mixing them is how people get promoted into the wrong job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. AI tooling -->
+  <section data-screen-label="08 AI Tooling">
+    <div class="s8" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>Force multiplier</span><span>Tools I shipped at Kyra</span></div>
+      <div class="head">
+        <h3>AI as the <span class="italic pink">force multiplier</span> — not the product.</h3>
+        <div class="label">08 / 12</div>
+      </div>
+      <table>
+        <tr>
+          <th>What it does</th>
+          <th>How it shows up in the system</th>
+          <th>Stack</th>
+        </tr>
+        <tr>
+          <td class="t">Sourcing agent</td>
+          <td class="d">Pulls candidates from People Data Labs against role-shaped queries, ranks against rubric, drops into ATS-ready shortlist.</td>
+          <td class="s">Node · Express · React/Vite · PDL Pro</td>
+        </tr>
+        <tr>
+          <td class="t">Interview transcript scorer</td>
+          <td class="d">Structured JSON output against evidence-based rubrics. Reduces lazy ratings; surfaces inter-rater drift.</td>
+          <td class="s">LLM · rubric DSL · JSON schema</td>
+        </tr>
+        <tr>
+          <td class="t">1:1 insight extractor</td>
+          <td class="d">Reads anonymised 1:1 notes, surfaces themes by team, flags signal worth a manager conversation.</td>
+          <td class="s">LLM · vector store · n8n</td>
+        </tr>
+        <tr>
+          <td class="t">Salary benchmarking agent</td>
+          <td class="d">Pulls live competitor JDs, normalises bands, keeps Kyra's comp envelope honest in real time.</td>
+          <td class="s">Scraper · LLM normaliser · sheet</td>
+        </tr>
+        <tr>
+          <td class="t">JD Architect</td>
+          <td class="d">Turns market intelligence into role design — scope, level, comp band, evaluation rubric — in one pass.</td>
+          <td class="s">LLM · market scrape · template</td>
+        </tr>
+        <tr>
+          <td class="t">n8n operations spine</td>
+          <td class="d">Onboarding, DocuSign contracts, Slack summaries, newsletter scraping, BambooHR sync.</td>
+          <td class="s">n8n · BambooHR · DocuSign · Slack</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 9. Outcomes -->
+  <section data-screen-label="09 Outcomes">
+    <div class="s9" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>What changed</span><span>Outcomes after one full cycle</span></div>
+      <div class="head">
+        <h3>What changed when the system <span class="italic pink">told the truth.</span></h3>
+        <div class="label">09 / 12</div>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="lbl">Calibration</div>
+          <div class="big">3×</div>
+          <p>Top performers surfaced at three times the rate of the legacy review. Comp uplift landed where signal was, not where tenure was.</p>
+        </div>
+        <div class="tile">
+          <div class="lbl">Distribution</div>
+          <div class="big">Curve</div>
+          <p>Power curve replaced the "everyone meets" plateau. Three distinct conversations — exit, enrich, enlarge — instead of one.</p>
+        </div>
+        <div class="tile">
+          <div class="lbl">AMO engagement</div>
+          <div class="big">+22</div>
+          <p>Manager-actionable items surfaced from AMO scoring; engagement on the "Opportunity" axis moved +22 points across two cycles.</p>
+        </div>
+        <div class="tile">
+          <div class="lbl">Hiring</div>
+          <div class="big">−41%</div>
+          <p>Sourcing-agent shortlists reduced time-to-shortlist by 41%; quality-of-hire bar tracked through the Impact Factor in cycle one.</p>
+        </div>
+        <div class="tile">
+          <div class="lbl">Comp drift</div>
+          <div class="big">Closed</div>
+          <p>Benchmarking agent surfaced four roles drifting more than 12% under-market within the first quarter.</p>
+        </div>
+        <div class="tile">
+          <div class="lbl">Operating cost</div>
+          <div class="big">1 FTE</div>
+          <p>n8n + agents absorbed roughly one full-time-equivalent of ops work — without adding headcount to the people function.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. For Trybe -->
+  <section data-screen-label="10 For Trybe">
+    <div class="s10" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>What this means for Trybe</span><span>Series A · 300+ properties · Five Elms</span></div>
+      <div class="head">
+        <h3>Trybe is at the <span class="italic pink">exact stage</span> where the people system stops being optional.</h3>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <div class="kicker">Where you are</div>
+          <h4>Series A, ~$30M raised, 300+ properties live.</h4>
+          <p>You're past founder-led hiring. The next 18 months is about scaling the operator team that scales the operators using Trybe.</p>
+          <p><strong>The risk:</strong> hire fast, calibrate never, end up with a 95%-meets-expectations org by Series B.</p>
+        </div>
+        <div class="col">
+          <div class="kicker">What I'd bring</div>
+          <h4>Impact Factor, TDX and AMO, tuned for a multi-site SaaS.</h4>
+          <p>Spa operators, account managers, RevOps and engineers don't share a single performance language today — they should.</p>
+          <p><strong>The work:</strong> one operating system across product, GTM and customer success, with calibration that travels across function.</p>
+        </div>
+        <div class="col">
+          <div class="kicker">Why now</div>
+          <h4>Hospitality talent &amp; SaaS talent meet here.</h4>
+          <p>Few people functions speak both languages. I do — Lionbridge taught me multi-entity operator orgs; Kyra taught me Series A AI-native pace.</p>
+          <p><strong>The promise:</strong> a sharper people function, not a heavier one. Same headcount footprint, more signal per pound spent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. 90 days -->
+  <section data-screen-label="11 90 days">
+    <div class="s11" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>First 90 days</span><span>Listen · Map · Ship</span></div>
+      <div class="head">
+        <h3>First 90 days — <span class="italic pink">listen, map, ship.</span></h3>
+      </div>
+      <div class="timeline">
+        <div class="phase">
+          <div class="dot"></div>
+          <div class="when">Days 0 – 30 · Listen</div>
+          <h4>Baseline the truth.</h4>
+          <ul>
+            <li>1:1 with every Trybe leader; 1:1 with five customers (spa ops directors).</li>
+            <li>Audit current ratings, comp bands, hiring funnel, engagement signal.</li>
+            <li>Map the org against TDX — what % is genuinely top-tier in role today.</li>
+            <li>Identify the two functions where calibration matters most this year.</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="dot"></div>
+          <div class="when">Days 31 – 60 · Map</div>
+          <h4>Define the operating system.</h4>
+          <ul>
+            <li>Draft Impact Factors per function, validated with leaders.</li>
+            <li>Set Trybe's first Talent Density Index target with the exec team.</li>
+            <li>Stand up the AMO survey instrument; quarterly cadence agreed.</li>
+            <li>Shortlist three AI tools to build first (sourcing, transcript, comp).</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="dot"></div>
+          <div class="when">Days 61 – 90 · Ship</div>
+          <h4>One calibration moment, in the open.</h4>
+          <ul>
+            <li>Run the first cross-function calibration session with exec.</li>
+            <li>Publish the comp philosophy and pay-band map internally.</li>
+            <li>Ship the sourcing agent in production for two open roles.</li>
+            <li>End-of-quarter: present TDX baseline + 12-month plan to the board.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Thank you -->
+  <section data-screen-label="12 Thank you">
+    <div class="s12" style="height:100%; box-sizing:border-box;">
+      <div class="chrome top"><span><span class="dot"></span>Thank you</span><span>Open for questions</span></div>
+      <div></div>
+      <div class="big"><span class="a-large"></span>Thank<br>you<span class="italic pink">.</span></div>
+      <div class="foot">
+        <div class="q">"Build the system, then automate it." Happy to dig into Impact Factor calibration, the AI stack, or where I'd start at Trybe — whatever's most useful.</div>
+        <div class="meta">[Your name]<br>[email] · [phone]<br>May 2026</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>
